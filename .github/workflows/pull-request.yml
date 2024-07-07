@@ -1,11 +1,11 @@
-name: Testing style and build
+name: testing run project in dev
 
 on:
   pull_request:
     branches: ["master"]
 
 jobs:
-  lint-check:
+  build-start:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,7 +21,7 @@ jobs:
         with:
           cmd: install
 
-      - name: Lint
+      - name: Run dev
         uses: Borales/actions-yarn@v4
         with:
           cmd: dev
