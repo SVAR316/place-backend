@@ -4,15 +4,15 @@ const UserController = require('../controllers/UserController')
 const ImageController = require('../controllers/ImageController')
 
 const controllersArray = [
-    UserController,
-    ImageController
+  UserController,
+  ImageController
 ]
 
 module.exports = new class ApiService {
 
-    async getAllFunctions() {
+  async getAllFunctions() {
 
 
-        return {error: false, result: {version: version, api: api}}
-    }
+    return {error: false, result: {version: version, api: api}}
+  }
 }

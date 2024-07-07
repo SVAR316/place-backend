@@ -1,10 +1,10 @@
 // imports
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const User = require('../controllers/UserController')
 const Image = require('../controllers/ImageController')
 const ApiController = require('../controllers/ApiController')
-const multer = require("multer");
+const multer = require('multer');
 
 // create class
 
@@ -14,13 +14,13 @@ const ImageController = new Image()
 // settings storage
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "./uploads/"); //Здесь указывается путь для сохранения файлов
-    },
-    filename: function (req, file, cb) {
-        // let reg = /.[a-z]{3,6}/gm
-        cb(null, Date.now() + file.originalname);
-    },
+  destination: function (req, file, cb) {
+    cb(null, './uploads/'); //Здесь указывается путь для сохранения файлов
+  },
+  filename: function (req, file, cb) {
+    // let reg = /.[a-z]{3,6}/gm
+    cb(null, Date.now() + file.originalname);
+  },
 });
 const upload = multer({ storage: storage });
 
@@ -48,6 +48,6 @@ router.get('/users', async (req,res) => await UserController.getUsers(req,res))
 // IMAGES
 
 router.post('/addImage', upload.fields([{ name: 'image', maxCount: 1 }]), async (req, res) => await ImageController.addImage(req,res));
-router.post("/deleteImage", async (req,res) => await ImageController.deleteImage(req,res))
+router.post('/deleteImage', async (req,res) => await ImageController.deleteImage(req,res))
 
 module.exports = router;
