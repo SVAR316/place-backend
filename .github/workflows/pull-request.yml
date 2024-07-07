@@ -21,7 +21,7 @@ jobs:
         with:
           cmd: install
 
-      - name: Run dev
+      - name: Run start
         uses: Borales/actions-yarn@v4
         with:
-          cmd: dev
+          cmd: start
