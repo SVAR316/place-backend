@@ -1,0 +1,35 @@
+{
+  "functions": [
+    {
+      "name": "login",
+      "controller": "user",
+      "method": "POST",
+      "required": {
+        "username": "string",
+        "password": "string"
+      },
+      "success": {
+        "error": false,
+        "result": true
+      },
+      "errors": [
+        {
+          "code": 404,
+          "message": "Не удалось найти пользователя"
+        },
+        {
+          "code": 401,
+          "message": "Не правильный пароль"
+        },
+        {
+          "code": 404,
+          "message": "Пропущен один или несколько параметров"
+        }
+      ]
+    }
+  ],
+  "categories": [
+    "user",
+    "image"
+  ]
+}
