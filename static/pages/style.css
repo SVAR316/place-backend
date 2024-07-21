@@ -12,6 +12,11 @@ body{
     max-width: 1440px;
     margin: 0 auto;
 }
+@media (max-width: 1440px) {
+    .container{
+        padding: 0 20px;
+    }
+}
 
 .upper{
     padding: 20px;
@@ -41,4 +46,31 @@ body{
 .body-content{
     display: flex;
     flex-direction: column;
+    margin-top: 50px;
+    gap: 20px;
+}
+
+.api__category{
+    color: white;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.api-content__title{
+    color: white;
+    font-size: 18px;
+}
+
+.api-required{
+    margin-top: 20px;
+    border: 3px solid #843889;
+    background-color: #212121;
+    color: white;
+    padding: 10px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.api-required p{
+    font-size: 14px;
 }

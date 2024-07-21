@@ -103,4 +103,17 @@ module.exports = new class UserService {
     return {error: false, result: users}
   }
 
+  async addBalance(id){
+
+    const user = await UserModel.findOne({where: {id: id}})
+
+    if(!user) return {error: true, result: 'Не удалось найти пользователя', status: 404}
+
+    user.wallet = user.wallet + 1000
+
+    user.save()
+
+    return {error: false, result: true}
+  }
+
 }

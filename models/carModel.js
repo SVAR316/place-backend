@@ -2,7 +2,7 @@ const db = require('../db')
 const {model, models} = require('../db')
 const { DataTypes } = require('sequelize')
 
-const CarModel = db.define('car', {
+const TypeModel = db.define('type', {
   id: {type: DataTypes.INTEGER, primaryKey: true, unique: true, autoIncrement: true,},
   name: {type: DataTypes.STRING, unique: false},
   driveUnit: {type: DataTypes.STRING, unique: false},
@@ -19,4 +19,4 @@ const CarModel = db.define('car', {
 
 })
 
-module.exports = CarModel;
+module.exports = TypeModel;

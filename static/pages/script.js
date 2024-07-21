@@ -17,13 +17,18 @@ function parserAndDisplayApi(api, body){
   let html = ''
 
   api.categories.forEach(category => {
-    html = html + `<p>${category} controller</p>`
+    html = html + `<p class="api__category">${category} controller</p>`
     api.functions.forEach(item => {
       if(item.controller === category){
         html = html +
-                    `<div>
-                        <p>${item.name} - ${item.method}</p>
-                        ${typeof item.required != 'undefined' ? '<p>' + item.required + '</p>' : ''}
+                    `<div class="api-content">
+                        <p class="api-content__title">${item.name} - ${item.method}</p>
+                        
+                          ${typeof item.required != 'undefined' ?
+                          '<div class="api-required">' + 
+                            parserRequired(item.required) +
+                          '</div>'
+                          : ''}
                         ${parserError(item.errors)}
                     </div>`
       }
@@ -33,6 +38,17 @@ function parserAndDisplayApi(api, body){
   body.innerHTML = html
 }
 
+function parserRequired(required){
+  let html = ''
+
+  if(typeof required !== 'undefined'){
+    required.forEach(item => {
+      html = html + "<p>" + item.name + ": " + item.type +  ";</p>"
+    })
+    return html
+  }
+  else return html
+}
 function parserError(errors) {
   let html = ''
 

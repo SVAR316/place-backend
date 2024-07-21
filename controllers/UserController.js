@@ -100,5 +100,13 @@ module.exports = class UserController {
   }
 
 
+  async addBalance(req,res){
+    const {id} = await req.body
+
+    const answer = await UserService.addBalance(id)
+
+    return CommonService.returnMessage(res, answer)
+  }
+
 }
 

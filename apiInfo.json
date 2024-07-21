@@ -4,10 +4,16 @@
       "name": "login",
       "controller": "user",
       "method": "POST",
-      "required": {
-        "username": "string",
-        "password": "string"
-      },
+      "required": [
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "type": "string"
+        }
+      ],
       "success": {
         "error": false,
         "result": true
