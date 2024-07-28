@@ -31,6 +31,7 @@ const upload = multer({storage: storage});
 // API
 
 router.get('/', async (req, res) => {
+    // eslint-disable-next-line no-undef
     res.sendFile(process.cwd() + '/static/pages/index.html')
 })
 router.get('/getAllFunctions', async (req, res) => await ApiController.getAllFunction(req, res))
@@ -50,7 +51,8 @@ router.post('/addBalance', async (req, res) => await UserController.addBalance(r
 
 // /addCar
 // /deleteCar
-router.get('/getType', async (req,res) => await CarController.getType(req,res))
+router.get('/getType', async (req,res) => await CarController.getTypes(req,res))
+router.get('/getType/:id', async (req,res) => await CarController.getType(req,res))
 router.post('/addType', async (req, res) => await CarController.addType(req, res))
 router.patch('/patchType', async (req, res) => await CarController.patchType(req, res))
 router.delete('/deleteType', async (req, res) => await CarController.deleteType(req, res))
