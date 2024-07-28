@@ -20,6 +20,7 @@ module.exports = new class CommonService {
         res.send(answer)
     }
 
+    // FIXME: Починить проверку параметров придумать как вставлять параметры иначе чтобы если их нет, не возвращало undefined
     checkParams(params) {
         const errorArray = []
 
