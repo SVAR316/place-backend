@@ -66,7 +66,7 @@ function parserError(errors) {
 
 async function getInfo() {
 
-  return (await fetch('http://localhost:5000/api/getAllFunctions')).json()
+  return (await fetch('http://localhost:5009/api/getAllFunctions')).json()
 
 }
 
