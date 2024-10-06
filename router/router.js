@@ -47,6 +47,12 @@ router.get('/users', async (req, res) => await UserController.getUsers(req, res)
 router.post('/addBalance', async (req, res) => await UserController.addBalance(req, res))
 
 
+// Events
+// TODO: Создания мероприятия
+// TODO: Редактирование мероприятия
+// TODO: Удаление мероприятия
+
+
 router.post('/addImage', upload.fields([{
     name: 'image',
     maxCount: 1
