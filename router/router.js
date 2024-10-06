@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../controllers/UserController')
 const Image = require('../controllers/ImageController')
-const Car = require('../controllers/CarContoller')
 const ApiController = require('../controllers/ApiController')
 const multer = require('multer');
 
@@ -47,18 +46,6 @@ router.get('/users', async (req, res) => await UserController.getUsers(req, res)
 // Тестовое пополнение баланса
 router.post('/addBalance', async (req, res) => await UserController.addBalance(req, res))
 
-
-
-// TODO: По снос CARS
-
-// TODO: /addCar
-// TODO: /deleteCar
-// router.get('/getType', async (req,res) => await CarController.getTypes(req,res))
-// router.get('/getType/:id', async (req,res) => await CarController.getType(req,res))
-// router.post('/addType', async (req, res) => await CarController.addType(req, res))
-// router.patch('/patchType', async (req, res) => await CarController.patchType(req, res))
-// router.delete('/deleteType', async (req, res) => await CarController.deleteType(req, res))
-// IMAGES
 
 router.post('/addImage', upload.fields([{
     name: 'image',
