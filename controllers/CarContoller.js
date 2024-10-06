@@ -32,7 +32,11 @@ module.exports = class CarContoller {
 
         const {
             name,
+            generation,
             driveUnit,
+            steeringWheelSide,
+            yearIssue,
+            bodyType,
             length,
             width,
             height,
@@ -55,7 +59,7 @@ module.exports = class CarContoller {
         //     })
         // }
 
-        const answer = await CarService.addType(name, driveUnit, length, width, height, groundClearance, frontTrackWidth, rearTrackWidth, wheelSize, producingCountry, classCar, typeGasoline)
+        const answer = await CarService.addType(id, name, generation, driveUnit, steeringWheelSide, yearIssue, bodyType, length, width, height, groundClearance, frontTrackWidth, rearTrackWidth, wheelSize, producingCountry, classCar, typeGasoline)
 
         return CommonService.returnMessage(res, answer)
     }
@@ -64,7 +68,11 @@ module.exports = class CarContoller {
         const {
             id,
             name,
+            generation,
             driveUnit,
+            steeringWheelSide,
+            yearIssue,
+            bodyType,
             length,
             width,
             height,
@@ -87,7 +95,7 @@ module.exports = class CarContoller {
         //     })
         // }
 
-        const answer = await CarService.patchType(id, name, driveUnit, length, width, height, groundClearance, frontTrackWidth, rearTrackWidth, wheelSize, producingCountry, classCar, typeGasoline)
+        const answer = await CarService.patchType(id, name, generation, driveUnit, steeringWheelSide, yearIssue, bodyType, length, width, height, groundClearance, frontTrackWidth, rearTrackWidth, wheelSize, producingCountry, classCar, typeGasoline)
 
         return CommonService.returnMessage(res, answer)
     }

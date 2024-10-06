@@ -3,6 +3,7 @@ const CommonService = require('../common/CommonService')
 
 module.exports = class UserController {
 
+  // TODO:Добавить генератор статического токена и для регистрации тоже
   async login(req, res) {
     CommonService.startTimer('login')
     const {username, password} = await req.body;

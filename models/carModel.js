@@ -5,7 +5,11 @@ const { DataTypes } = require('sequelize')
 const TypeModel = db.define('type', {
   id: {type: DataTypes.INTEGER, primaryKey: true, unique: true, autoIncrement: true,},
   name: {type: DataTypes.STRING, unique: false},
+  generation: {type: DataTypes.STRING, unique: false},
   driveUnit: {type: DataTypes.STRING, unique: false},
+  steeringWheelSide: {type: DataTypes.STRING, unique: false},
+  yearIssue: {type: DataTypes.STRING, unique: false},
+  bodyType: {type: DataTypes.STRING, unique: false},
   length: {type: DataTypes.STRING, unique: false},
   width: {type: DataTypes.STRING, unique: false},
   height: {type: DataTypes.STRING, unique: false},

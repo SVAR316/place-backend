@@ -12,6 +12,11 @@ module.exports = new class CarService {
             types.push({
                 id: type.id,
                 name: type.name,
+                generation: type.generation,
+                driveUnit: type.driveUnit,
+                steeringWheelSide: type.steeringWheelSide,
+                yearIssue: type.yearIssue,
+                bodyType: type.bodyType,
                 length: type.length,
                 width: type.width,
                 height: type.height,
@@ -38,7 +43,11 @@ module.exports = new class CarService {
             error: false, result: {
                 id: type.id,
                 name: type.name,
+                generation: type.generation,
                 driveUnit: type.driveUnit,
+                steeringWheelSide: type.steeringWheelSide,
+                yearIssue: type.yearIssue,
+                bodyType: type.bodyType,
                 length: type.length,
                 width: type.width,
                 height: type.height,
@@ -53,11 +62,16 @@ module.exports = new class CarService {
         }
     }
 
-    async addType(name, driveUnit, length, width, height, groundClearance, frontTrackWidth, rearTrackWidth, wheelSize, producingCountry, classCar, typeGasoline) {
+    async addType(name, generation, driveUnit, steeringWheelSide, yearIssue, bodyType, length, width, height, groundClearance, frontTrackWidth, rearTrackWidth, wheelSize, producingCountry, classCar, typeGasoline) {
 
 
         const type = await TypeModel.create({
             name: name,
+            generation: generation,
+            driveUnit: driveUnit,
+            steeringWheelSide: steeringWheelSide,
+            yearIssue: yearIssue,
+            bodyType: bodyType,
             length: length,
             width: width,
             height: height,
@@ -76,14 +90,18 @@ module.exports = new class CarService {
         }
     }
 
-    async patchType(id, name, driveUnit, length, width, height, groundClearance, frontTrackWidth, rearTrackWidth, wheelSize, producingCountry, classCar, typeGasoline) {
+    async patchType(id, name, generation, driveUnit, steeringWheelSide, yearIssue, bodyType, length, width, height, groundClearance, frontTrackWidth, rearTrackWidth, wheelSize, producingCountry, classCar, typeGasoline) {
 
         const type = await TypeModel.findOne({where: {id: id}})
 
         if (!type) return {error: true, result: 'Нет такого типа авто', status: 401}
 
         type.name = name
+        type.generation = generation
         type.driveUnit = driveUnit
+        type.steeringWheelSide = steeringWheelSide
+        type.yearIssue = yearIssue
+        type.bodyType = bodyType
         type.length = length
         type.width = width
         type.height = height

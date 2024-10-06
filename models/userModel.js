@@ -8,6 +8,7 @@ const UserModel = db.define('user', {
   password: {type: DataTypes.STRING, unique: false},
   email: {type: DataTypes.STRING, unique: true,},
   wallet: {type: DataTypes.INTEGER, unique: false},
+  staticToken: {type: DataTypes.STRING, unique: false},
   role: {type: DataTypes.STRING, unique: false},
 })
 

@@ -1,0 +1,4 @@
+{
+  "exceptions": ["/api/", "/api/getAllFunctions","/api/login", "/api/registration"],
+  "universalToken": "Bearer testToken"
+}

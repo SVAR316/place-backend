@@ -30,4 +30,6 @@ module.exports = new class CommonService {
 
         return errorArray
     }
+
+    // TODO: Сделать проверку существует ли config.json
 }

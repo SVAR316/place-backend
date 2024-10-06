@@ -10,7 +10,12 @@ module.exports = new class UserService {
 
     if (user.password === password) return {error: true, result: 'Не правильный пароль', status: 401}
 
-    return {error: false, result: true}
+    let token = await this.generateToken()
+
+    user.staticToken = token
+    user.save()
+
+    return {error: false, result: true, token: token}
   }
 
   async registration(username, password, email, role) {
@@ -24,25 +29,22 @@ module.exports = new class UserService {
 
     if (cand) return {error: true, result: 'Пользователь с таким email уже существует', status: 401}
 
+    let token = await this.generateToken()
+
     const user = await UserModel.create({
       username: username,
       password: password,
       email: email,
       urlImage: '',
+      staticToken: token,
       wallet: 0,
       role: role,
     })
 
     return {
       error: false,
-      result: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        urlImage: user.urlImage,
-        wallet: user.wallet,
-        role: user.role,
-      }
+      result: true,
+      token: token,
     }
   }
 
@@ -116,4 +118,12 @@ module.exports = new class UserService {
     return {error: false, result: true}
   }
 
+
+  async generateToken(){
+    return randomFunction(99999, 999999)
+  }
+
+  randomFunction(min, max) {
+    return Math.round(min + Math.random() * (max - min));
+  }
 }
