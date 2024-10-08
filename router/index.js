@@ -10,7 +10,6 @@ const multer = require('multer');
 
 const UserController = new User()
 const ImageController = new Image()
-const CarController = new Car()
 
 // settings storage
 
@@ -43,6 +42,7 @@ router.patch('/updateUser', async (req, res) => await UserController.updateUser(
 router.get('/users/:id', async (req, res) => await UserController.getUser(req, res))
 router.get('/users', async (req, res) => await UserController.getUsers(req, res))
 
+// TODO: Удалить
 // Тестовое пополнение баланса
 router.post('/addBalance', async (req, res) => await UserController.addBalance(req, res))
 
@@ -51,6 +51,8 @@ router.post('/addBalance', async (req, res) => await UserController.addBalance(r
 // TODO: Создания мероприятия
 // TODO: Редактирование мероприятия
 // TODO: Удаление мероприятия
+// TODO: Подписка пользователя на мероприятие
+// TODO: Донат на мероприятие
 
 
 router.post('/addImage', upload.fields([{
