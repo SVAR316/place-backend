@@ -1,5 +1,5 @@
 const UserService = require('../services/UserService')
-const CommonService = require('../common/CommonService')
+const CommonService = require('../services/CommonService')
 
 module.exports = class UserController {
 
@@ -97,15 +97,6 @@ module.exports = class UserController {
     const answer = await UserService.getUsers()
 
     CommonService.endTimer('getUsers')
-    return CommonService.returnMessage(res, answer)
-  }
-
-
-  async addBalance(req,res){
-    const {id} = await req.body
-
-    const answer = await UserService.addBalance(id)
-
     return CommonService.returnMessage(res, answer)
   }
 

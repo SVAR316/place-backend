@@ -1,5 +1,5 @@
 const ImageService = require('../services/ImageService')
-const CommonService = require('../common/CommonService')
+const CommonService = require('../services/CommonService')
 
 module.exports = class ImageController {
 

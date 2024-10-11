@@ -1,129 +1,128 @@
-const UserModel = require('../models/userModel');
+const { UserModel: userModel } = require('../models/index');
 
 module.exports = new class UserService {
 
-  async login(username, password) {
+    async login(username, password) {
 
-    const user = await UserModel.findOne({where: {username: username}})
+        const user = await userModel.findOne({where: {username: username}})
+        if (!user) return {error: true, result: 'Не удалось найти пользователя', status: 404}
 
-    if (!user) return {error: true, result: 'Не удалось найти пользователя', status: 404}
+        if (user.password === password) return {error: true, result: 'Не правильный пароль', status: 401}
 
-    if (user.password === password) return {error: true, result: 'Не правильный пароль', status: 401}
+        let token = await this.generateToken()
 
-    let token = await this.generateToken()
+        user.staticToken = token
+        user.save()
 
-    user.staticToken = token
-    user.save()
-
-    return {error: false, result: true, token: token}
-  }
-
-  async registration(username, password, email, role) {
-
-
-    let cand = await UserModel.findOne({where: {username: username}})
-
-    if (cand) return {error: true, result: 'Пользователь с таким логином уже существует', status: 401}
-
-    cand = await UserModel.findOne({where: {email: email}})
-
-    if (cand) return {error: true, result: 'Пользователь с таким email уже существует', status: 401}
-
-    let token = await this.generateToken()
-
-    const user = await UserModel.create({
-      username: username,
-      password: password,
-      email: email,
-      urlImage: '',
-      staticToken: token,
-      wallet: 0,
-      role: role,
-    })
-
-    return {
-      error: false,
-      result: true,
-      token: token,
+        return {error: false, result: true, token: token}
     }
-  }
 
-  async resetPassword(req, res) {
-  }
+    async registration(username, password, email, role) {
 
-  async updateUser(id, username, password, email, urlImage, role) {
 
-    const user = await UserModel.findOne({where: {id: id}})
+        let cand = await userModel.findOne({where: {username: username}})
 
-    if(!user) return {error: true, result: 'Данный пользователь не найден', status: 404}
+        if (cand) return {error: true, result: 'Пользователь с таким логином уже существует', status: 401}
 
-    user.username = username
-    user.password = password
-    user.email = email
-    user.urlImage = urlImage
-    user.role = role
-    user.save()
+        cand = await userModel.findOne({where: {email: email}})
 
-    return {error: false, result: true}
-  }
+        if (cand) return {error: true, result: 'Пользователь с таким email уже существует', status: 401}
 
-  async getUser(id) {
+        let token = await this.generateToken()
 
-    const user = await UserModel.findOne({where: {id: id}})
+        const user = await userModel.create({
+            username: username,
+            password: password,
+            email: email,
+            urlImage: '',
+            staticToken: token,
+            wallet: 0,
+            role: role,
+        })
 
-    if (!user) return {error: true, result: 'Данный пользователь не найден', status: 404}
-
-    return {
-      error: false, result: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        urlImage: user.urlImage,
-        wallet: user.wallet,
-        role: user.role,
-      }
+        return {
+            error: false,
+            result: true,
+            token: token,
+        }
     }
-  }
 
-  async getUsers() {
+    async resetPassword(req, res) {
+    }
 
-    const usersDb = await UserModel.findAll()
+    async updateUser(id, username, password, email, urlImage, role) {
 
-    const users = []
+        const user = await userModel.findOne({where: {id: id}})
 
-    usersDb.forEach((user) => {
-      users.push({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        urlImage: user.urlImage,
-        wallet: user.wallet,
-        role: user.role,
-      })
-    })
+        if (!user) return {error: true, result: 'Данный пользователь не найден', status: 404}
 
-    return {error: false, result: users}
-  }
+        user.username = username
+        user.password = password
+        user.email = email
+        user.urlImage = urlImage
+        user.role = role
+        user.save()
 
-  async addBalance(id){
+        return {error: false, result: true}
+    }
 
-    const user = await UserModel.findOne({where: {id: id}})
+    async getUser(id) {
 
-    if(!user) return {error: true, result: 'Не удалось найти пользователя', status: 404}
+        const user = await userModel.findOne({where: {id: id}})
 
-    user.wallet = user.wallet + 1000
+        if (!user) return {error: true, result: 'Данный пользователь не найден', status: 404}
 
-    user.save()
+        return {
+            error: false, result: {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                urlImage: user.urlImage,
+                wallet: user.wallet,
+                role: user.role,
+            }
+        }
+    }
 
-    return {error: false, result: true}
-  }
+    async getUsers() {
+
+        const usersDb = await userModel.findAll()
+
+        const users = []
+
+        usersDb.forEach((user) => {
+            users.push({
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                urlImage: user.urlImage,
+                wallet: user.wallet,
+                role: user.role,
+            })
+        })
+
+        return {error: false, result: users}
+    }
+
+    async addBalance(id) {
+
+        const user = await userModel.findOne({where: {id: id}})
+
+        if (!user) return {error: true, result: 'Не удалось найти пользователя', status: 404}
+
+        user.wallet = user.wallet + 1000
+
+        user.save()
+
+        return {error: false, result: true}
+    }
 
 
-  async generateToken(){
-    return randomFunction(99999, 999999)
-  }
+    async generateToken() {
+        return randomFunction(99999, 999999)
+    }
 
-  randomFunction(min, max) {
-    return Math.round(min + Math.random() * (max - min));
-  }
+    randomFunction(min, max) {
+        return Math.round(min + Math.random() * (max - min));
+    }
 }
