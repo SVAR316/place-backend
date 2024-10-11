@@ -4,7 +4,7 @@ const imageModel = require('./imageModel')
 const participantsModel = require('./participantsModel')
 const userModel = require('./userModel')
 
-export {
+module.exports = {
     donateModel,
     eventModel,
     imageModel,
