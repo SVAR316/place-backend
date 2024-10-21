@@ -7,6 +7,8 @@ const routers = require('./router')
 const path = require('path');
 const logger = require('./middleware/logger')
 const checkAuth = require('./middleware/checkAuth')
+const CommonService = require('./services/CommonService')
+
 
 
 app.use(express.json())
@@ -19,9 +21,12 @@ app.use('/static', express.static(path.join(__dirname, '/static')))
 app.use('/api', routers)
 
 try{
+  CommonService.checkConfigFile()
   app.listen(process.env.PORT);
   db.authenticate();
   db.sync()
+
+
   setTimeout(() =>{
     console.clear()
     console.log('\n' +
@@ -38,5 +43,5 @@ try{
 
 
 }catch (e){
-  console.error('По какой то причине не удалось запустить сервер: ' + e)
+  console.error(e)
 }

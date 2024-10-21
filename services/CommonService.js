@@ -1,4 +1,5 @@
 require('dotenv').config()
+const fs = require('fs')
 
 module.exports = new class CommonService {
 
@@ -12,7 +13,7 @@ module.exports = new class CommonService {
 
     async returnMessage(res, answer) {
 
-        if (answer.error) {
+        if (answer.status) {
             res.status(answer.status)
             delete answer.status
         } else res.status(200)
@@ -31,5 +32,8 @@ module.exports = new class CommonService {
         return errorArray
     }
 
-    // TODO: Сделать проверку существует ли config.json
+    checkConfigFile(){
+        if(fs.existsSync('./config.json')) return true
+        else throw Error("Отсутствует config file")
+    }
 }
