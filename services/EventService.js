@@ -58,4 +58,19 @@ module.exports = class EventService {
 
         return {error: false, result: true}
     }
+
+    async getEvents(){
+        // TODO: Сделать пагинацию и поиск по параметрам
+        const events = await eventModel.findAll()
+
+        return {error: false, result: events}
+    }
+
+    async getEvent(id){
+        const event = await eventModel.findOne({where: {id: id}})
+
+        if(!event) return {error: true, result: 'Event not found', status: 404}
+
+        return {error: false, result: event}
+    }
 }

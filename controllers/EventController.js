@@ -84,9 +84,24 @@ module.exports = class EventController {
     }
 
     async getEvents(req, res) {
+        CommonService.startTimer('getEvents')
+
+        const answer = await EventService.getEvents()
+
+        CommonService.endTimer('getEvents')
+
+        return CommonService.returnMessage(res, answer)
     }
 
     async getEvent(req, res) {
+        CommonService.startTimer('getEvent')
+        const {id} = await req.params
+
+        const answer = await EventService.getEvent(id)
+
+        CommonService.endTimer('getEvent')
+
+        return CommonService.returnMessage(res, answer)
     }
 
     async subscribeEvent(req, res) {
