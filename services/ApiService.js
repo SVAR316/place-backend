@@ -1,6 +1,6 @@
 const {version} = require('../package.json')
 const api = require('../apiInfo.json')
-const UserController = require('../controllers/UserController')
+const UserController = require('../controllers/user.controller')
 const ImageController = require('../controllers/ImageController')
 
 const controllersArray = [

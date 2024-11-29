@@ -8,15 +8,15 @@ module.exports = class UserController {
     CommonService.startTimer('login')
     const {username, password} = await req.body;
 
-    const checkedParams = CommonService.checkParams([username, password])
-    if (checkedParams.length !== 0) {
-      CommonService.endTimer('login')
-      return CommonService.returnMessage(res, {
-        error: true,
-        result: `Укажите нужный параметр: ${checkedParams[0]}`,
-        status: 401
-      })
-    }
+    // const checkedParams = CommonService.checkParams([username, password])
+    // if (checkedParams.length !== 0) {
+    //   CommonService.endTimer('login')
+    //   return CommonService.returnMessage(res, {
+    //     error: true,
+    //     result: `Укажите нужный параметр: ${checkedParams[0]}`,
+    //     status: 400
+    //   })
+    // }
 
     const answer = await UserService.login(username, password)
     CommonService.endTimer('login')
@@ -28,15 +28,15 @@ module.exports = class UserController {
 
     const {username, password, email, role} = await req.body;
 
-    const checkedParams = CommonService.checkParams([username, password, email, role])
-    if (checkedParams.length !== 0) {
-      CommonService.endTimer('registration')
-      return CommonService.returnMessage(res, {
-        error: true,
-        result: `Укажите нужный параметр: ${checkedParams[0]}`,
-        status: 401
-      })
-    }
+    // const checkedParams = CommonService.checkParams([username, password, email, role])
+    // if (checkedParams.length !== 0) {
+    //   CommonService.endTimer('registration')
+    //   return CommonService.returnMessage(res, {
+    //     error: true,
+    //     result: `Укажите нужный параметр: ${checkedParams[0]}`,
+    //     status: 401
+    //   })
+    // }
 
     const answer = await UserService.registration(username, password, email, role)
 

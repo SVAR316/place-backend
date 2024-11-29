@@ -1,4 +1,5 @@
 const { UserModel: userModel } = require('../models/index');
+const {UserLibs} = require('../libs/index');
 
 module.exports = new class UserService {
 
@@ -9,12 +10,9 @@ module.exports = new class UserService {
 
         if (user.password === password) return {error: true, result: 'Не правильный пароль', status: 401}
 
-        let token = await this.generateToken()
+        let token = await UserLibs.generateTokents(user)
 
-        user.staticToken = token
-        user.save()
-
-        return {error: false, result: true, token: token}
+        return {error: false, accessToken: token.accessToken, refreshToken: token.refreshToken}
     }
 
     async registration(username, password, email, role) {
@@ -22,28 +20,24 @@ module.exports = new class UserService {
 
         let cand = await userModel.findOne({where: {username: username}})
 
-        if (cand) return {error: true, result: 'Пользователь с таким логином уже существует', status: 401}
+        if (cand) return {error: true, result: 'Пользователь с таким логином уже существует', status: 400}
 
         cand = await userModel.findOne({where: {email: email}})
 
-        if (cand) return {error: true, result: 'Пользователь с таким email уже существует', status: 401}
-
-        let token = await this.generateToken()
+        if (cand) return {error: true, result: 'Пользователь с таким email уже существует', status: 400}
 
         const user = await userModel.create({
             username: username,
             password: password,
             email: email,
             urlImage: '',
-            staticToken: token,
             wallet: 0,
             role: role,
         })
 
         return {
             error: false,
-            result: true,
-            token: token,
+            status: 201
         }
     }
 
@@ -115,11 +109,6 @@ module.exports = new class UserService {
         user.save()
 
         return {error: false, result: true}
-    }
-
-
-    async generateToken() {
-        return randomFunction(99999, 999999)
     }
 
     randomFunction(min, max) {
