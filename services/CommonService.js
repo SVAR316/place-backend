@@ -21,19 +21,23 @@ module.exports = new class CommonService {
         res.send(answer)
     }
 
-    // FIXME: Починить проверку параметров придумать как вставлять параметры иначе чтобы если их нет, не возвращало undefined
-    checkParams(params) {
-        const errorArray = []
+    // FIXME: Проверить функцию
+    async checkParams(params) {
+        const errors = [];
 
-        params.forEach((param) => {
-            if (typeof param == 'undefined' || param == null) errorArray.push(param)
-        })
+        params.forEach((item) => {
+            for (const [key, value] of Object.entries(item)) {
+                if (value === undefined || value === null) {
+                    errors.push(key);
+                }
+            }
+        });
 
-        return errorArray
+        return errors;
     }
 
-    checkConfigFile(){
-        if(fs.existsSync('./config.json')) return true
+    checkConfigFile() {
+        if (fs.existsSync('./config.json')) return true
         else throw Error("Отсутствует config file")
     }
 }

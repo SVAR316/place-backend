@@ -1,14 +1,16 @@
 // imports
 const express = require('express');
 const router = express.Router();
-const {User, Image, Event, ApiController} = require('../controllers/index.js');
+const {User, Image, Event, News, ApiController} = require('../controllers/index.js');
 const multer = require('multer');
+
 
 // create class
 
 const UserController = new User()
 const ImageController = new Image()
 const EventController = new Event()
+const NewsController = new News()
 
 // settings storage
 
@@ -17,7 +19,6 @@ const storage = multer.diskStorage({
         cb(null, './uploads/'); //Здесь указывается путь для сохранения файлов
     },
     filename: function (req, file, cb) {
-        // let reg = /.[a-z]{3,6}/gm
         cb(null, Date.now() + file.originalname);
     },
 });
@@ -42,13 +43,20 @@ router.get('/users/:id', async (req, res) => await UserController.getUser(req, r
 router.get('/users', async (req, res) => await UserController.getUsers(req, res))
 
 // Events
-router.post('/createEvent', async (req,res) => await EventController.createEvent(req, res))
-router.patch('/editEvent', async (req, res) => await EventController.editEvent(req, res))
-router.delete('/deleteEvent', async (req, res) => await EventController.deleteEvent(req, res))
+router.post('/event', async (req,res) => await EventController.createEvent(req, res))
+router.patch('/event', async (req, res) => await EventController.editEvent(req, res))
+router.delete('/event', async (req, res) => await EventController.deleteEvent(req, res))
 router.get('/events', async (req, res) => await EventController.getEvents(req, res))
 router.get('/event/:id', async (req, res) => await EventController.getEvent(req, res))
 router.post('/subscribe', async (req, res) => await EventController.subscribeEvent(req, res))
 router.post('/donate', async (req, res) => await EventController.donateEvent(req, res))
+
+// News
+router.get('/news', async (req, res) => await NewsController.getNews(req,res))
+router.get('/news/:id', async (req, res) => await NewsController.getNewsById(req,res))
+router.post('/news', async (req, res) => await NewsController.createNews(req,res))
+router.patch('/news', async (req, res) => await NewsController.updateNews(req,res))
+router.delete('/news', async (req, res) => await NewsController.deleteNews(req,res))
 
 // Notification
 // TODO: Получение уведомлений
@@ -62,6 +70,9 @@ router.post('/addImage', upload.fields([{
     name: 'image',
     maxCount: 1
 }]), async (req, res) => await ImageController.addImage(req, res));
+
 router.post('/deleteImage', async (req, res) => await ImageController.deleteImage(req, res))
+
+
 
 module.exports = router;
