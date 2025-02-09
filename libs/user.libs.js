@@ -22,7 +22,7 @@ module.exports = new class UserLibs {
         return {accessToken: accessToken, refreshToken: refreshToken};
     }
 
-    async verifyToken(token){
+     verifyToken(token){
         try{
             const verifyToken = jwt.verify(token, config.secretToken);
 
