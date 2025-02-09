@@ -21,17 +21,14 @@ module.exports = new class CommonService {
         res.send(answer)
     }
 
-    // FIXME: Проверить функцию
-    async checkParams(params) {
+    checkParams(params) {
         const errors = [];
 
-        params.forEach((item) => {
-            for (const [key, value] of Object.entries(item)) {
-                if (value === undefined || value === null) {
-                    errors.push(key);
-                }
+        for (const [key, value] of Object.entries(params)) {
+            if (value === undefined || value === null) {
+                errors.push(key);  // Добавляем имя переменной в список ошибок
             }
-        });
+        }
 
         return errors;
     }

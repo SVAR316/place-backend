@@ -3,26 +3,21 @@
 const config = require('../config.json')
 
 module.exports = async function checkAuth(req, res, next) {
-    if(checkExceptions(req.originalUrl)) {
-        next()
-    }else{
-        let token = await req.headers['authorization']
-
-        if(checkToken(token)) return next()
-
-        return res.status(401).send({error: true, result: 'Authentication failed'})
-        // next()
+    if (checkExceptions(req.originalUrl)) {
+        return next();
     }
+
+    const token = req.headers['authorization'];
+    if (checkToken(token)) {
+        return next();
+    }
+
+    return res.status(401).send({ error: true, result: 'Authentication failed' });
 }
 
 
 function checkExceptions(url) {
-    // console.log(url)
-    config.exceptions.forEach(exception => {
-        // console.log(exception)
-        if(exception == url) return true
-    })
-    return false
+    return config.exceptions.some(exception => exception.trim() === url.trim());
 }
 
 // TODO: Сделать проверку на сгенерированный токен
