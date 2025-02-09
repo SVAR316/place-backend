@@ -1,6 +1,5 @@
-// TODO: Добавить проверку статического токена авторизации пользователя или если он вообще есть
-
 const config = require('../config.json')
+const UserLibs = require('../libs/index')
 
 module.exports = async function checkAuth(req, res, next) {
     if (checkExceptions(req.originalUrl)) {
@@ -8,22 +7,15 @@ module.exports = async function checkAuth(req, res, next) {
     }
 
     const token = req.headers['authorization'];
-    if (checkToken(token)) {
+
+    if (UserLibs.UserLibs.verifyToken(token)) {
         return next();
     }
 
-    return res.status(401).send({ error: true, result: 'Authentication failed' });
+    return res.status(401).send({error: true, result: 'Authentication failed'});
 }
 
 
 function checkExceptions(url) {
     return config.exceptions.some(exception => exception.trim() === url.trim());
-}
-
-// TODO: Сделать проверку на сгенерированный токен
-function checkToken(token){
-
-    if(typeof token != 'undefined' && token === config.universalToken) return true
-    else if(typeof token != 'undefined') return true
-    else return false
 }

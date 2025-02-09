@@ -15,6 +15,7 @@ const EventModel = db.define('event', {
     fundraising: {type: DataTypes.BOOLEAN, allowNull: false},
     totalAmount: {type: DataTypes.INTEGER, allowNull: false},
     maxPeople: {type: DataTypes.INTEGER, allowNull: false},
+    createdUser: {type: DataTypes.INTEGER, allowNull: false},
 })
 
 module.exports = EventModel;

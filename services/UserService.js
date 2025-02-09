@@ -1,4 +1,4 @@
-const { UserModel: userModel } = require('../models/index');
+const { userModel } = require('../models/index');
 const {UserLibs} = require('../libs/index');
 
 module.exports = new class UserService {
@@ -8,7 +8,8 @@ module.exports = new class UserService {
         const user = await userModel.findOne({where: {username: username}})
         if (!user) return {error: true, result: 'Не удалось найти пользователя', status: 404}
 
-        if (user.password === password) return {error: true, result: 'Не правильный пароль', status: 401}
+        console.log(user.password.trim() + " " + password.trim())
+        if (user.password !== password) return {error: true, result: 'Не правильный пароль', status: 401}
 
         let token = await UserLibs.generateTokents(user)
 
@@ -30,8 +31,6 @@ module.exports = new class UserService {
             username: username,
             password: password,
             email: email,
-            urlImage: '',
-            wallet: 0,
             role: role,
         })
 

@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const { spawn } = require('child_process');
 const db = require('./db')
 const routers = require('./router')
 const path = require('path');
@@ -9,8 +10,6 @@ const logger = require('./middleware/logger')
 const checkAuth = require('./middleware/checkAuth')
 const CommonService = require('./services/CommonService')
 const fs = require('fs')
-
-
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -22,15 +21,8 @@ app.use('/static', express.static(path.join(__dirname, '/static')))
 app.use('/api', routers)
 
 try{
-  CommonService.checkConfigFile()
+  CommonService.init()
   app.listen(process.env.PORT);
-
-
-  db.authenticate();
-  db.sync()
-  if (!fs.existsSync('uploads/')) {
-    fs.mkdirSync('uploads/', { recursive: true });
-  }
 
 
   setTimeout(() =>{

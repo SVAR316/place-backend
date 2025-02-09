@@ -9,7 +9,6 @@ module.exports = class EventService {
 
         if (!user) return {error: true, result: 'User not found', status: 404}
 
-        //TODO: Сделать привязку создателей к ивенту
 
         const event = await eventModel.create({
             name: name,
@@ -20,7 +19,8 @@ module.exports = class EventService {
             dueTime: dueTime,
             fundraising: fundraising,
             totalAmount: totalAmount,
-            maxPeople: maxPeople
+            maxPeople: maxPeople,
+            createdUser: userId,
             })
 
         if(!event) return {error: true, result: 'Not created event', status: 500}
@@ -47,12 +47,12 @@ module.exports = class EventService {
         return {error: false, result: true}
     }
 
-    async deleteEvent(id) {
+    async deleteEvent(id, userId) {
         const event = await eventModel.findOne({where: {id: id}})
 
         if(!event) return {error: true, result: 'Event not found', status: 404}
 
-        // if() return {error: true, result: 'For this user, this action is not possible', status: 401}
+        if(event.createdUser !== userId) return {error: true, result: 'For this user, this action is not possible', status: 401}
 
         await event.destroy()
 

@@ -4,7 +4,6 @@ const router = express.Router();
 const {User, Image, Event, News, ApiController} = require('../controllers/index.js');
 const multer = require('multer');
 
-
 // create class
 
 const UserController = new User()
@@ -51,15 +50,15 @@ router.get('/event/:id', async (req, res) => await EventController.getEvent(req,
 router.post('/subscribe', async (req, res) => await EventController.subscribeEvent(req, res))
 router.post('/donate', async (req, res) => await EventController.donateEvent(req, res))
 
+// Collection
+// TODO: Добавить сборы
+
 // News
 router.get('/news', async (req, res) => await NewsController.getNews(req,res))
 router.get('/news/:id', async (req, res) => await NewsController.getNewsById(req,res))
 router.post('/news', async (req, res) => await NewsController.createNews(req,res))
 router.patch('/news', async (req, res) => await NewsController.updateNews(req,res))
 router.delete('/news', async (req, res) => await NewsController.deleteNews(req,res))
-
-// Notification
-// TODO: Получение уведомлений
 
 // Обработчик оплаты (Эмитация)
 // TODO: Заявка на создания оплаты

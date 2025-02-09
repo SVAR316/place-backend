@@ -24,10 +24,11 @@ module.exports = new class UserLibs {
 
      verifyToken(token){
         try{
+            console.log(token)
             const verifyToken = jwt.verify(token, config.secretToken);
-
             return !!verifyToken;
         }catch(e){
+            console.log(e)
             return false
         }
     }

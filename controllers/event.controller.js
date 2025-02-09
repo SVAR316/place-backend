@@ -75,7 +75,7 @@ module.exports = class EventController {
     async deleteEvent(req, res) {
         CommonService.startTimer('deleteEvent')
         const {id} = await req.body
-        // TODO:Придумать проверку на создателя
+
         const answer = await EventService.deleteEvent(id)
 
         CommonService.endTimer('deleteEvent')

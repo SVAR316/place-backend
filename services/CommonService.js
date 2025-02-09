@@ -1,5 +1,7 @@
 require('dotenv').config()
 const fs = require('fs')
+const db = require("../db");
+const {userModel} = require("../models");
 
 module.exports = new class CommonService {
 
@@ -36,5 +38,25 @@ module.exports = new class CommonService {
     checkConfigFile() {
         if (fs.existsSync('./config.json')) return true
         else throw Error("Отсутствует config file")
+    }
+
+    async init(){
+        this.checkConfigFile()
+        await db.authenticate();
+        await db.sync()
+        if (!fs.existsSync('uploads/')) {
+            fs.mkdirSync('uploads/', { recursive: true });
+        }
+
+        const admin = await userModel.findOne({where: {username: 'admin'}})
+
+        if(!admin){
+            const user = await userModel.create({
+                username: 'admin',
+                password: 'admin',
+                email: 'admin@mail.com',
+                role: 'admin',
+            })
+        }
     }
 }
